@@ -47,7 +47,7 @@ void FixedUpdate()
 
 public void OnControllerColliderHit(ControllerColliderHit hit)
 {
-    Debug.Log(hit.gameObject.tag);
+   
 }
 
 
