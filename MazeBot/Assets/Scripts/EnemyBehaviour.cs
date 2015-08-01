@@ -10,8 +10,16 @@ public class EnemyBehaviour : MonoBehaviour {
     public GameObject Bullet;
     public Transform BulletOrigin;
 
+    public Transform Target;
+
+
+   public Transform startWayPoint, EndWayPoint;
+
    public static bool isAlive = false;
-    Transform Target;
+
+   bool RecentlyFoundPlayer = false;
+
+
 
     Rigidbody bulletPhysics;
 
@@ -21,7 +29,7 @@ public class EnemyBehaviour : MonoBehaviour {
 	void Start () {
 
         NavAgent = this.GetComponent<NavMeshAgent>();
-
+        NavAgent.destination = startWayPoint.position;
         
 
         
@@ -29,9 +37,8 @@ public class EnemyBehaviour : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Target = transform;
 
-        
+        transform.position =new Vector3(transform.position.x, 1.0f, transform.position.z);
         
 
         RaycastObject.Rotate(0, 100 * Time.deltaTime,0 );
@@ -41,18 +48,26 @@ public class EnemyBehaviour : MonoBehaviour {
         if (Status)
         {
             NavAgent.enabled = true;
-            Target.LookAt(Player);
-
+            NavAgent.destination = Target.position;
+            RecentlyFoundPlayer = true;
+           
         }
         else
         {
 
-            NavAgent.enabled = false;
+            NavAgent.enabled = true;
+            SetDefaultWaypoint();
         
         }
 
+        if (RecentlyFoundPlayer && CalculateDistance()>DetectDistance)
+        {
+            NavAgent.destination = startWayPoint.position;
 
+            RecentlyFoundPlayer = false;
+        }
        
+
         if (CalculateDistance()<5.0f)
         {
 
@@ -125,5 +140,32 @@ public class EnemyBehaviour : MonoBehaviour {
 
         Debug.Log(distance);
         return distance;
+    }
+
+
+
+    void SetDefaultWaypoint()
+    {
+
+
+        if (transform.position == startWayPoint.position)
+        {
+            NavAgent.destination = EndWayPoint.position;
+        
+        }
+        else if (transform.position == EndWayPoint.position)
+        {
+
+            NavAgent.destination = startWayPoint.position;
+        }
+        else
+        {
+
+          // NavAgent.destination = startWayPoint.position;
+        
+        }
+       
+    
+    
     }
 }
