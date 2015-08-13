@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CharacterControls : MonoBehaviour {
    
-    int speed = 10;
+    int speed = 15;
 
     int gravity = 20;
 

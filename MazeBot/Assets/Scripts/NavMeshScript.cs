@@ -15,7 +15,7 @@ public class NavMeshScript : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
        
 
 

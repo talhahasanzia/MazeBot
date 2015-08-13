@@ -3,8 +3,8 @@ using System.Collections;
 
 public class EnemyBehaviour : MonoBehaviour {
 
-    NavMeshAgent NavAgent;
-
+    public static bool isJammed=false;
+    
     public Transform Player;
     public Transform RaycastObject;
     public GameObject Bullet;
@@ -12,15 +12,20 @@ public class EnemyBehaviour : MonoBehaviour {
 
     public Transform Target;
 
-
-   public Transform startWayPoint, EndWayPoint;
-
-   public static bool isAlive = false;
-
-   bool RecentlyFoundPlayer = false;
+    public Transform StartPosition;
 
 
+    public Vector3 MoveDirection;
 
+
+    Rigidbody EnemyRG;
+
+   public static bool isBulletAlive = false;
+
+   bool recentlyFoundPlayer;
+
+
+   Transform ResetPosition;
     Rigidbody bulletPhysics;
 
     public float DetectDistance=50.0f;
@@ -28,69 +33,97 @@ public class EnemyBehaviour : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-        NavAgent = this.GetComponent<NavMeshAgent>();
-        NavAgent.destination = startWayPoint.position;
-        
+        ResetPosition = StartPosition;
 
-        
+        MoveDirection = transform.forward;
+        EnemyRG = this.GetComponent<Rigidbody>();
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 
-        transform.position =new Vector3(transform.position.x, 1.0f, transform.position.z);
-        
 
-        RaycastObject.Rotate(0, 100 * Time.deltaTime,0 );
-
-        bool Status = isSeen();
-
-        if (Status)
+        if (!isJammed)
         {
-            NavAgent.enabled = true;
-            NavAgent.destination = Target.position;
-            RecentlyFoundPlayer = true;
+            EnemyRG.velocity = Vector3.zero;
+            EnemyRG.angularVelocity = Vector3.zero;
+
+            // transform.position = new Vector3(transform.position.x, 1.0f, transform.position.z);
            
-        }
-        else
-        {
 
-            NavAgent.enabled = true;
-            SetDefaultWaypoint();
-        
-        }
 
-        if (RecentlyFoundPlayer && CalculateDistance()>DetectDistance)
-        {
-            NavAgent.destination = startWayPoint.position;
 
-            RecentlyFoundPlayer = false;
-        }
-       
 
-        if (CalculateDistance()<5.0f)
-        {
+            RaycastObject.Rotate(0, 100 * Time.deltaTime, 0);
 
-            if (!isAlive)
+            bool Status = isSeen();
+
+
+            if (recentlyFoundPlayer)
             {
-                
-                GameObject Clone = Instantiate(Bullet);
-                isAlive = true;
-                Clone.transform.position = BulletOrigin.position;
 
-                bulletPhysics = Clone.GetComponent<Rigidbody>();
+                if (CalculateDistance() > DetectDistance)
+                {
+                    //this.transform.position = StartPosition.position;
+
+                    //transform.position = Vector3.Lerp(transform.position, StartPosition.position, 2 * Time.deltaTime);
+                    //this.transform.rotation = StartPosition.rotation;
+                    //recentlyFoundPlayer = false;
+
+                }
 
 
 
-                bulletPhysics.useGravity = true;
 
-                bulletPhysics.AddForce(transform.forward * 700);
+
+
+
             }
-        
+
+
+
+            if (CalculateDistance() < 10.0f)
+            {
+
+                if (!isBulletAlive)
+                {
+
+                    recentlyFoundPlayer = true;
+
+                    Transform shotTarget = this.transform; ;
+                    shotTarget.LookAt(Player.transform);
+
+
+
+                    GameObject Clone = Instantiate(Bullet);
+                    isBulletAlive = true;
+                    Clone.transform.position = BulletOrigin.position;
+
+                    bulletPhysics = Clone.GetComponent<Rigidbody>();
+
+
+
+                    bulletPhysics.useGravity = true;
+                    bulletPhysics.isKinematic = false;
+
+                    bulletPhysics.AddForce(shotTarget.forward * 700);
+                   
+                }
+             
+                transform.Translate(transform.forward * 2 * Time.deltaTime);
+
+            }
+            else
+            {
+
+
+                transform.Translate(MoveDirection * 2 * Time.deltaTime);
+            
+            }
+            
+
         }
-
-       
-
+        
 	}
 
 
@@ -114,14 +147,13 @@ public class EnemyBehaviour : MonoBehaviour {
             {
 
 
-               
+                
                 status= true;
             }
         
         }
 
-        if (CalculateDistance() < DetectDistance)
-            status = true;
+      
 
         return status;
 
@@ -138,34 +170,38 @@ public class EnemyBehaviour : MonoBehaviour {
         distance = (Player.position - transform.position).magnitude;
 
 
-        Debug.Log(distance);
+       
         return distance;
     }
 
-
-
-    void SetDefaultWaypoint()
+    public void OnCollisionEnter(Collision collision)
     {
 
-
-        if (transform.position == startWayPoint.position)
+        if (collision.gameObject.tag == "Wall")
         {
-            NavAgent.destination = EndWayPoint.position;
+
+            MoveDirection = -(MoveDirection);
         
         }
-        else if (transform.position == EndWayPoint.position)
-        {
 
-            NavAgent.destination = startWayPoint.position;
-        }
-        else
-        {
 
-          // NavAgent.destination = startWayPoint.position;
-        
-        }
-       
-    
-    
     }
+
+    public void OnTriggerEnter(Collider other)
+    {
+
+        isJammed = true;
+
+
+    }
+
+    public void OnTriggerExit(Collider other)
+    {
+        isJammed = false;
+    }
+
+
+
+
+    
 }

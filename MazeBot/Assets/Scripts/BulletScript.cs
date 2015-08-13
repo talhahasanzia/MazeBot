@@ -4,26 +4,26 @@ using System.Collections;
 public class BulletScript : MonoBehaviour {
 
 
-    public Transform Origin;
+   // public Transform Origin;
     Rigidbody bullet;
     
     // Use this for initialization
 	void Start () {
-	
+        bullet = this.GetComponent<Rigidbody>();
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 
-        bullet = this.GetComponent<Rigidbody>();
+        
 	
 	}
 
     public void OnCollisionEnter(Collision collision)
     {
-
+        EnemyBehaviour.isBulletAlive = false;
         Destroy(this.gameObject);
-        EnemyBehaviour.isAlive = false;
+       
 
     }
 

@@ -13,6 +13,36 @@ public class Objective : MonoBehaviour {
 	
 	}
 
+    public void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+
+       
+
+
+    }
+
+    void StageClear()
+    {
+
+
+        
+    
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+
+        if (other.gameObject.tag == "Player")
+            StageClear();
+
+
+    }
+
+
+
+
+    
+
  
 
 
