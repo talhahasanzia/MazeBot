@@ -24,8 +24,8 @@ public class Objective : MonoBehaviour {
     void StageClear()
     {
 
-
-        
+        if(CharacterControls.HasPassKey)
+        Debug.Log("Stage Clear");
     
     }
 

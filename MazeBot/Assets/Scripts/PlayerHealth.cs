@@ -17,7 +17,7 @@ public class PlayerHealth : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 
-        Debug.Log("Health: " + Health);
+       
         if (Health == 0)
             Respawn();
 

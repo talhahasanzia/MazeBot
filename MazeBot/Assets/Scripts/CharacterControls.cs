@@ -2,7 +2,10 @@
 using System.Collections;
 
 public class CharacterControls : MonoBehaviour {
-   
+
+    public static bool HasPassKey = false;
+    
+    
     int speed = 15;
 
     int gravity = 20;
@@ -27,7 +30,7 @@ public class CharacterControls : MonoBehaviour {
 void FixedUpdate()
 {
 
-	
+   
 	if(controller.isGrounded)
 	{
 		moveDirection =new Vector3(0,0, Input.GetAxis("Vertical"));
@@ -47,7 +50,14 @@ void FixedUpdate()
 
 public void OnControllerColliderHit(ControllerColliderHit hit)
 {
-   
+
+
+    if (hit.gameObject.tag == "Passkey")
+    {
+
+        HasPassKey = true;
+     }
+
 }
 
 
