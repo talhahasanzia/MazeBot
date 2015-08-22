@@ -6,6 +6,5 @@ C:\Users\talha\Documents\GitHub\MazeBot\MazeBot\Temp\UnityVS_bin\Debug\UnityEngi
 C:\Users\talha\Documents\GitHub\MazeBot\MazeBot\Temp\UnityVS_bin\Debug\UnityEngine.xml
 C:\Users\talha\Documents\GitHub\MazeBot\MazeBot\Temp\UnityVS_bin\Debug\UnityEditor.xml
 C:\Users\talha\Documents\GitHub\MazeBot\MazeBot\Temp\UnityVS_bin\Debug\UnityEngine.UI.xml
-C:\Users\talha\Documents\GitHub\MazeBot\MazeBot\obj\Debug\UnityVS.MazeBot.CSharp.csprojResolveAssemblyReference.cache
 C:\Users\talha\Documents\GitHub\MazeBot\MazeBot\obj\Debug\Assembly-CSharp.dll
 C:\Users\talha\Documents\GitHub\MazeBot\MazeBot\obj\Debug\Assembly-CSharp.pdb
