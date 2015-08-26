@@ -18,7 +18,7 @@ public class LaserScript : MonoBehaviour {
 
         
 
-        Debug.Log("Enemy hit: " + EnemyHit);
+//        Debug.Log("Enemy hit: " + EnemyHit);
         if (Input.GetButtonDown("Fire1"))
         {
 
