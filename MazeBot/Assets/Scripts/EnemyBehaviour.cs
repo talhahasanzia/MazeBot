@@ -189,7 +189,7 @@ public class EnemyBehaviour : MonoBehaviour {
 
     public void OnTriggerEnter(Collider other)
     {
-
+        if(other.gameObject.tag=="Jammer")
         isJammed = true;
 
 
@@ -197,6 +197,7 @@ public class EnemyBehaviour : MonoBehaviour {
 
     public void OnTriggerExit(Collider other)
     {
+        if (other.gameObject.tag == "Jammer")
         isJammed = false;
     }
 

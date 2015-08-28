@@ -6,11 +6,11 @@ public class NewEnemyBehaviourScript : MonoBehaviour {
 
     public static bool isJammed = false;
 
-    public Transform Player;
-    public Transform RaycastObject;
+  //  public Transform Player;
+  //  public Transform RaycastObject;
     
 
-    public Transform Target;
+  //  public Transform Target;
 
    // public Transform StartPosition;
 
@@ -34,9 +34,9 @@ public class NewEnemyBehaviourScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        ResetPosition.position = new Vector3(transform.position.x,transform.position.y,transform.position.z);
+     //   ResetPosition.position = new Vector3(transform.position.x,transform.position.y,transform.position.z);
 
-        MoveDirection = transform.right;
+        MoveDirection = transform.forward;
         //EnemyRG = this.GetComponent<Rigidbody>();
 	}
 	
@@ -53,7 +53,7 @@ public class NewEnemyBehaviourScript : MonoBehaviour {
 
 
 
-            RaycastObject.Rotate(0, 100 * Time.deltaTime, 0);
+          //  RaycastObject.Rotate(0, 100 * Time.deltaTime, 0);
 
             bool Status = isSeen();
 
@@ -81,23 +81,23 @@ public class NewEnemyBehaviourScript : MonoBehaviour {
 
 
 
-            if (CalculateDistance() < 10.0f)
-            {
+            //if (CalculateDistance() < 10.0f)
+            //{
 
                
 
-                transform.Translate(transform.forward * 2 * Time.deltaTime);
+            //    transform.Translate(MoveDirection * 2 * Time.deltaTime);
 
-            }
-            else
-            {
-
-
-                transform.Translate(MoveDirection * 2 * Time.deltaTime);
-
-            }
+            //}
+            //else
+            //{
 
 
+            //    transform.Translate(MoveDirection * 2 * Time.deltaTime);
+
+            //}
+
+            transform.Translate(MoveDirection * 2 * Time.deltaTime);
         }
         
 	}
@@ -105,26 +105,26 @@ public class NewEnemyBehaviourScript : MonoBehaviour {
     {
         RaycastHit hitObj;
         bool status = false;
-        if (Physics.Raycast(RaycastObject.position, RaycastObject.forward, out hitObj, 50.0f))
-        {
+        //if (Physics.Raycast(RaycastObject.position, RaycastObject.forward, out hitObj, 50.0f))
+        //{
 
-            Debug.DrawLine(RaycastObject.position, hitObj.point,Color.red);
-            if (hitObj.collider.tag == "Wall")
-            {
-
-
-
-                status = false;
-            }
-            if (hitObj.collider.tag == "Player")
-            {
+        //    Debug.DrawLine(RaycastObject.position, hitObj.point,Color.red);
+        //    if (hitObj.collider.tag == "Wall")
+        //    {
 
 
 
-                status = true;
-            }
+        //        status = false;
+        //    }
+        //    if (hitObj.collider.tag == "Player")
+        //    {
 
-        }
+
+
+        //        status = true;
+        //    }
+
+        //}
 
 
 
@@ -138,9 +138,9 @@ public class NewEnemyBehaviourScript : MonoBehaviour {
     {
 
 
-        float distance;
+        float distance=0;
 
-        distance = (Player.position - transform.position).magnitude;
+        //distance = (Player.position - transform.position).magnitude;
 
 
 
@@ -152,9 +152,14 @@ public class NewEnemyBehaviourScript : MonoBehaviour {
 
         if (collision.gameObject.tag == "Wall")
         {
+          
+            //transform.rotation =Quaternion.Euler(transform.rotation.x, transform.rotation.y +180, transform.rotation.y);
 
-            MoveDirection = -(MoveDirection);
-
+            transform.Rotate(transform.rotation.x, transform.rotation.y + 180, transform.rotation.z);
+            
+            
+            
+           // MoveDirection = -(MoveDirection);
         }
 
 
